@@ -12,7 +12,6 @@ import (
 type model struct {
 	state               appState            // Tracks the current state (booting or listing directories)
 	progress            progress.Model      // Loading indicator on app start
-	files               []string            // List of files in the current directory
 	fileContents        map[string]string   // File contents for dummy file system
 	directories         map[string][]string // Fake file system
 	currentDir          string              // Current directory
