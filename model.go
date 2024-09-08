@@ -34,7 +34,7 @@ func initialModel() model {
 	fileContents := map[string]string{
 		"/notes.txt":             "Here are some notes for the project...",
 		"/documents/report.txt":  "This is the project report...",
-		"/documents/plan.md":     "# Project Plan\n\n## Tasks\n1. Task one\n2. Task two\n",
+		"/documents/plan.md":     "# Project Plan\n\n## Tasks\n1. Task one\n2. Task two\n> pee `pee poo` poo\n\npoo *poo* pee **pee**\n- one\n - two\n",
 		"/downloads/image.jpg":   "[Binary image data]",
 		"/downloads/archive.zip": "[Binary zip data]",
 	}
