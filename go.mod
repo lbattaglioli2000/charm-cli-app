@@ -1,4 +1,4 @@
-module github.com/charmbracelet/bubbletea-app-template
+module github.com/lbattaglioli2000/lost-frequencies-1
 
 go 1.21
 
