@@ -7,6 +7,7 @@ import (
 	"github.com/charmbracelet/wish"
 	"github.com/charmbracelet/wish/bubbletea"
 	"github.com/charmbracelet/wish/logging"
+	"github.com/muesli/termenv"
 	"os"
 	"time"
 
@@ -40,9 +41,9 @@ func main() {
 		wish.WithAddress(fmt.Sprintf("%s:%d", *host, *port)),
 		wish.WithHostKeyPath(".ssh/id_ed25519"), // Ensure you generate an SSH host key or set this path to an existing one
 		wish.WithMiddleware(
-			bubbletea.Middleware(func(s ssh.Session) (tea.Model, []tea.ProgramOption) {
+			bubbletea.MiddlewareWithColorProfile(func(s ssh.Session) (tea.Model, []tea.ProgramOption) {
 				return initialModel(), []tea.ProgramOption{tea.WithAltScreen()}
-			}),
+			}, termenv.TrueColor),
 			logging.Middleware(),
 		),
 	)
