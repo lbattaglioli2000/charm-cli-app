@@ -3,10 +3,12 @@ package main
 import (
 	"github.com/charmbracelet/bubbles/progress"
 	"github.com/charmbracelet/bubbles/table"
+	"github.com/charmbracelet/glamour"
 	"github.com/charmbracelet/lipgloss"
-  "github.com/charmbracelet/glamour"
 	"path/filepath"
 )
+
+var renderer = lipgloss.DefaultRenderer()
 
 // Represents the application state
 type model struct {
@@ -21,6 +23,7 @@ type model struct {
 	currentFileContents string              // The contents of the current file being viewed
 	terminalWidth       int                 // Terminal width
 	terminalHeight      int                 // Terminal height
+	renderer            *lipgloss.Renderer
 }
 
 // Initialize the app state with some fake directories and files
@@ -69,6 +72,7 @@ func initialModel() model {
 	directoryStructureTable.SetStyles(tableStyles)
 
 	return model{
+		renderer:     renderer,
 		state:        stateBooting, // Start in the booting state
 		progress:     progress.New(progress.WithDefaultGradient()),
 		fileContents: fileContents,
@@ -98,15 +102,15 @@ func generateRows(currentDirectory string, directories map[string][]string) []ta
 	return rows
 }
 
-func (m *model) renderFileContent(content string) string  {
-  fileExtension := filepath.Ext(m.viewingFile)
+func (m *model) renderFileContent(content string) string {
+	fileExtension := filepath.Ext(m.viewingFile)
 
-  if fileExtension == ".md" {
-    rendered, err := glamour.Render(content, "dark")
-    if err == nil {
-      return rendered
-    }
-  }
+	if fileExtension == ".md" {
+		rendered, err := glamour.Render(content, "dark")
+		if err == nil {
+			return rendered
+		}
+	}
 
-  return content
+	return content
 }

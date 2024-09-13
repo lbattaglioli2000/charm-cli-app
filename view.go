@@ -5,19 +5,19 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
-var baseStyle = lipgloss.NewStyle().
+var baseStyle = renderer.NewStyle().
 	BorderStyle(lipgloss.NormalBorder()).
 	BorderForeground(lipgloss.Color("240"))
 
-var helpStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("#626262")).Render
+var helpStyle = renderer.NewStyle().Foreground(lipgloss.Color("#626262")).Render
 
-var fileWindowStyle = lipgloss.NewStyle().
+var fileWindowStyle = renderer.NewStyle().
 	BorderStyle(lipgloss.RoundedBorder()).
 	BorderForeground(lipgloss.Color("62")).
 	Padding(1, 2).
 	Width(60)
 
-var centeredStyle = lipgloss.NewStyle().
+var centeredStyle = renderer.NewStyle().
 	Margin(0, 2). // Add top/bottom and left/right margin
 	Width(60).    // Set the width of the content
 	Align(lipgloss.Center, lipgloss.Center)
@@ -40,7 +40,7 @@ func (m model) View() string {
 
 	case stateViewing:
 
-    fc := m.renderFileContent(m.currentFileContents)
+		fc := m.renderFileContent(m.currentFileContents)
 
 		// Only show the file content, no table headers or rows
 		return centered.Render(fileWindowStyle.Render(fmt.Sprintf("Viewing %s\n\n%s", m.viewingFile, fc)) +
