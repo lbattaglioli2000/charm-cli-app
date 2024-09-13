@@ -32,8 +32,8 @@ func (m model) Init() tea.Cmd {
 }
 
 func main() {
-	var host = flag.String("host", "127.0.0.1", "Host address for SSH server to listen")
-	var port = flag.Int("port", 23234, "Port for SSH server to listen")
+	var host = flag.String("host", "0.0.0.0", "Host address for SSH server to listen")
+	var port = flag.Int("port", 22, "Port for SSH server to listen")
 
 	// Set up the Wish SSH server with the Bubble Tea TUI
 	sshServer, err := wish.NewServer(
