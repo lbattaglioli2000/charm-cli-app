@@ -7,6 +7,7 @@ import (
 	"github.com/charmbracelet/wish"
 	"github.com/charmbracelet/wish/bubbletea"
 	"github.com/charmbracelet/wish/logging"
+	"log"
 	"os"
 	"time"
 
@@ -32,8 +33,17 @@ func (m model) Init() tea.Cmd {
 }
 
 func main() {
+	logfilePath := "bubbletea.log"
+	if logfilePath != "" {
+		if _, err := tea.LogToFile(logfilePath, ""); err != nil {
+			log.Fatal(err)
+		}
+	}
+
 	var host = flag.String("host", "0.0.0.0", "Host address for SSH server to listen")
 	var port = flag.Int("port", 22, "Port for SSH server to listen")
+
+	flag.Parse()
 
 	// Set up the Wish SSH server with the Bubble Tea TUI
 	sshServer, err := wish.NewServer(
@@ -41,6 +51,14 @@ func main() {
 		wish.WithHostKeyPath(".ssh/id_ed25519"), // Ensure you generate an SSH host key or set this path to an existing one
 		wish.WithMiddleware(
 			bubbletea.Middleware(func(s ssh.Session) (tea.Model, []tea.ProgramOption) {
+
+				ptyReq, _, isPty := s.Pty()
+
+				if isPty {
+					log.Println("HIT!")
+					log.Println(ptyReq)
+				}
+
 				return initialModel(), []tea.ProgramOption{tea.WithAltScreen()}
 			}),
 			logging.Middleware(),
