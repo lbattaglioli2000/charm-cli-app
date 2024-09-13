@@ -43,7 +43,7 @@ func main() {
 		wish.WithMiddleware(
 			bubbletea.MiddlewareWithColorProfile(func(s ssh.Session) (tea.Model, []tea.ProgramOption) {
 				return initialModel(), []tea.ProgramOption{tea.WithAltScreen()}
-			}, termenv.ANSI),
+			}, termenv.ANSI256),
 			logging.Middleware(),
 		),
 	)
